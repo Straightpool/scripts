@@ -1,6 +1,6 @@
 #!/bin/bash
 # Basic StakePool Node Restart script after stuck_notifier is received
-# Created by Straight Pool, Ticket STR8
+# Created by Straight Pool, Ticker STR8
 
 while true
 do
