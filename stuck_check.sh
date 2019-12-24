@@ -12,7 +12,7 @@ do
   if [[ -n $LINE ]]; then
     NOW=$(date +"%Y-%m-%d_%H:%M:%S_%Z")  
     Uptime=`/home/<USER>/.cargo/bin/jcli rest v0 node stats get -h http://127.0.0.1:<REST_PORT>/api | grep 'uptime'`
-    echo "Restarting due to stuck_notifier with uptime $Uptime at $NOW" >> /home/<USER>/logs/stuck_check.log
+    echo "Restarting due to stuck_notifier with $Uptime at $NOW" >> /home/<USER>/logs/stuck_check.log
     systemctl stop shelleypoold
     sleep 5
     systemctl start shelleypoold
