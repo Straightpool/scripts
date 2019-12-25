@@ -3,7 +3,7 @@
 # Created by Straight Pool, Ticker STR8
 # Script version: 2.1
 
-# This script assumes you have setup your poool as a systemd service
+# This script assumes you have setup your pool as a systemd service
 # Run script with sudo rights, to put into the background at the same time: nohup sudo ./stuck_check.sh 2>&1 &
 # If you want the script to restart your node on other log keywords but stuck_notifier replace optionalsecondkeyword with the keyword you want to check for
 
