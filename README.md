@@ -1,4 +1,4 @@
-Helper scripts to run a Stakepool node
+#Helper scripts to run a Stakepool node
 
 stuck_check.sh - run with sudo, will restart node when a "stuck_notifier" is thrown\
                  Assumption: systemctl is used to start jormungandr node.\
