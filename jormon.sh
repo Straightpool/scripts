@@ -15,12 +15,12 @@
 
 POLLING_INTERVAL_SECONDS=30
 SYNC_TOLERANCE_SECONDS=240
-REST_API="http://127.0.0.1:9099/api"
+REST_API="http://127.0.0.1:<REST_PORT>/api"
 BOOTSTRAP_TIME=$SECONDS
 
 while true; do
 
-    LAST_BLOCK=$(/home/sl/.cargo/bin/jcli rest v0 node stats get --output-format json --host $REST_API 2> /dev/null)
+    LAST_BLOCK=$(jcli rest v0 node stats get --output-format json --host $REST_API 2> /dev/null)
     LAST_BLOCK_HEIGHT=$(echo $LAST_BLOCK | jq -r .lastBlockHeight)
     LAST_BLOCK_DATE=$(echo $LAST_BLOCK | jq -r .lastBlockTime)
     LAST_BLOCK_TIME=$(date -d$LAST_BLOCK_DATE +%s 2> /dev/null)
@@ -30,7 +30,7 @@ while true; do
     if ((LAST_BLOCK_TIME > 0)); then
         if ((DIFF_SECONDS > SYNC_TOLERANCE_SECONDS)); then
             echo "Jormungandr out-of-sync. Time difference of $DIFF_SECONDS seconds. Shutting down node..."
-            /home/sl/.cargo/bin/jcli rest v0 shutdown get --host $REST_API
+            jcli rest v0 shutdown get --host $REST_API
             BOOTSTRAP_TIME=$SECONDS
         else
             echo "Jormungandr synchronized. Time difference of $DIFF_SECONDS seconds. Last block height $LAST_BLOCK_HEIGHT."
@@ -41,9 +41,9 @@ while true; do
         echo "Jormungandr node is offline or bootstrapping since $BOOTSTRAP_ELAPSED_TIME..."
         if ((BOOTSTRAP_ELAPSED_TIME > SYNC_TOLERANCE_SECONDS)); then
           echo "Jormungandr stuck in bootstrap or offline too long. Attempting to restart node..."
-          systemctl stop jormungandr
+          systemctl stop <jormungandr.service>
           sleep 5
-          systemctl start jormungandr
+          systemctl start <jormungandr.service>
        fi
     fi
 
