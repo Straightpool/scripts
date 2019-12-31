@@ -1,6 +1,6 @@
 #!/bin/bash
 # Basic StakePool Node Restart script after stuck_notifier is received
-# Created by Straight Pool, Ticker STR8
+# Created by Straightpool (https://straightpool.github.io/about/) 
 # Script version: 2.1.1
 
 # This script assumes you have setup your pool as a systemd service
