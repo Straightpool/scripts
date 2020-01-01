@@ -14,14 +14,17 @@
 #   Run the script with sudo rights to make use of this added functionality
 # - Added uptime to logging output
 # - Modified timing of SYNC_TOLERANCE_SECONDS from 240 to 300 seconds
- 
-# Version 2.2
+# - Added monitoring of stuck node recovery times and record recovery times to fine tune parameter SYNC_TOLERANCE_SECONDS
+#
+# Version 2.3
 
 POLLING_INTERVAL_SECONDS=30
 SYNC_TOLERANCE_SECONDS=300
 BOOTSTRAP_TOLERANCE_SECONDS=480
 REST_API="http://127.0.0.1:<REST_PORT>/api"
 BOOTSTRAP_TIME=$SECONDS
+DIFF_SECONDS_OLD_CYCLE=0
+RECOVER_MAX_SECONDS=0
 
 while true; do
 
@@ -38,20 +41,31 @@ while true; do
             jcli rest v0 shutdown get --host $REST_API
             BOOTSTRAP_TIME=$SECONDS
         else
-            echo "Jormungandr synchronized. Time difference of $DIFF_SECONDS seconds. Last block height $LAST_BLOCK_HEIGHT."
             BOOTSTRAP_TIME=$SECONDS
-        fi
+            if ((DIFF_SECONDS < DIFF_SECONDS_OLD_CYCLE)); then
+                if ((DIFF_SECONDS_OLD_CYCLE > RECOVER_MAX_SECONDS)); then
+                    MAX_RECOVER_SECONDS=$(echo $DIFF_SECONDS_OLD_CYCLE)
+                    echo "Jormungandr synchronized, new record of recovery from time difference $DIFF_SECONDS_OLD_CYCLE seconds! Time difference now $DIFF_SECONDS seconds. Last block height $LAST_BLOCK_HEIGHT."
+                  else
+                   echo "Jormungandr synchronized, recovered from time difference $DIFF_SECONDS_OLD_CYCLE seconds. Time difference now $DIFF_SECONDS seconds. Last block height $LAST_BLOCK_HEIGHT."
+                fi
+              else
+                echo "Jormungandr synchronized. Time difference of $DIFF_SECONDS seconds. Last block height $LAST_BLOCK_HEIGHT."
+            fi
+         fi
     else
         BOOTSTRAP_ELAPSED_TIME=$(($SECONDS - $BOOTSTRAP_TIME))
-        echo "Jormungandr node is offline or bootstrapping since $BOOTSTRAP_ELAPSED_TIME..."
         if ((BOOTSTRAP_ELAPSED_TIME > BOOTSTRAP_TOLERANCE_SECONDS)); then
           echo "Jormungandr stuck in bootstrap or offline too long. Attempting to restart node..."
           systemctl stop <jormungandr.service>
           sleep 5
           systemctl start <jormungandr.service>
           BOOTSTRAP_TIME=$SECONDS
+       else
+          echo "Jormungandr node is offline or bootstrapping since $BOOTSTRAP_ELAPSED_TIME..."
        fi
     fi
 
+    DIFF_SECONDS_OLD_CYCLE=$DIFF_SECONDS
     sleep $POLLING_INTERVAL_SECONDS
 done
