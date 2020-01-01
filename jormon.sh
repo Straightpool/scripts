@@ -16,7 +16,7 @@
 # - Modified timing of SYNC_TOLERANCE_SECONDS from 240 to 300 seconds
 # - Added monitoring of stuck node recovery times and record recovery times to fine tune parameter SYNC_TOLERANCE_SECONDS
 #
-# Version 2.3
+# Version 2.4
 
 POLLING_INTERVAL_SECONDS=30
 SYNC_TOLERANCE_SECONDS=300
@@ -44,7 +44,7 @@ while true; do
             BOOTSTRAP_TIME=$SECONDS
             if ((DIFF_SECONDS < DIFF_SECONDS_OLD_CYCLE)); then
                 if ((DIFF_SECONDS_OLD_CYCLE > RECOVER_MAX_SECONDS)); then
-                    MAX_RECOVER_SECONDS=$(echo $DIFF_SECONDS_OLD_CYCLE)
+                    RECOVER_MAX_SECONDS=$(echo $DIFF_SECONDS_OLD_CYCLE)
                     echo "Jormungandr synchronized, new record of recovery from time difference $DIFF_SECONDS_OLD_CYCLE seconds! Time difference now $DIFF_SECONDS seconds. Last block height $LAST_BLOCK_HEIGHT."
                   else
                    echo "Jormungandr synchronized, recovered from time difference $DIFF_SECONDS_OLD_CYCLE seconds. Time difference now $DIFF_SECONDS seconds. Last block height $LAST_BLOCK_HEIGHT."
