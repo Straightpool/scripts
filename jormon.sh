@@ -11,6 +11,8 @@
 # Modification: The script also considers a node stuck if it is too long offline or in bootstrap mode. It then uses systemd 
 # to actually restart the node, as a simple shutdown won't work in these scenarios
 # Run the script with sudo rights to make use of this added functionality
+#
+# Version 2.1
 
 
 POLLING_INTERVAL_SECONDS=30
@@ -44,6 +46,7 @@ while true; do
           systemctl stop <jormungandr.service>
           sleep 5
           systemctl start <jormungandr.service>
+          BOOTSTRAP_TIME=$SECONDS
        fi
     fi
 
