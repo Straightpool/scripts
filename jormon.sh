@@ -63,6 +63,7 @@ while true; do
           BOOTSTRAP_TIME=$SECONDS
        else
           echo "Jormungandr node is offline or bootstrapping since $BOOTSTRAP_ELAPSED_TIME..."
+          DIFF_SECONDS_OLD_CYCLE=0
        fi
     fi
 
