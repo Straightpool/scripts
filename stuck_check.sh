@@ -14,9 +14,9 @@ do
     Uptime=`/home/<USER>/.cargo/bin/jcli rest v0 node stats get -h http://127.0.0.1:<REST_PORT>/api | grep 'uptime'`
     LastBlockHeight=`/home/<USER>/.cargo/bin/jcli rest v0 node stats get -h http://127.0.0.1:<REST_PORT>/api | grep 'lastBlockHeight'`
     echo "Restarting due to stuck_notifier with $Uptime at $LastBlockHeight at $NOW" >> /home/<USER>/logs/stuck_check.log
-    systemctl stop <SHELLEYD>
+    systemctl stop <jormungandr.service>
     sleep 5
-    systemctl start <SHELLEYD>
+    systemctl start <jormungandr.service>
   fi
 
 sleep 60
