@@ -67,7 +67,7 @@ while true; do
     fi
 
     if ((DIFF_SECONDS > 0)); then
-     DIFF_SECONDS_OLD_CYCLE=$DIFF_SECONDS
+      DIFF_SECONDS_OLD_CYCLE=$DIFF_SECONDS
     fi
     sleep $POLLING_INTERVAL_SECONDS
 done
