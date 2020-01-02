@@ -16,7 +16,7 @@
 # - Modified timing of SYNC_TOLERANCE_SECONDS from 240 to 300 seconds
 # - Added monitoring of stuck node recovery times and record recovery times to fine tune parameter SYNC_TOLERANCE_SECONDS
 #
-# Version 2.4
+# Version 2.5
 
 POLLING_INTERVAL_SECONDS=30
 SYNC_TOLERANCE_SECONDS=300
@@ -34,8 +34,8 @@ while true; do
     UPTIME=$(echo $LAST_BLOCK | jq -r .uptime)
     LAST_BLOCK_TIME=$(date -d$LAST_BLOCK_DATE +%s 2> /dev/null)
     CURRENT_TIME=$(date +%s)
-    DIFF_SECONDS=$((CURRENT_TIME - LAST_BLOCK_TIME))
     if ((LAST_BLOCK_TIME > 0)); then
+        DIFF_SECONDS=$((CURRENT_TIME - LAST_BLOCK_TIME))
         if ((DIFF_SECONDS > SYNC_TOLERANCE_SECONDS)); then
             echo "Jormungandr out-of-sync. Time difference of $DIFF_SECONDS seconds. Shutting down node with uptime $UPTIME..."
             jcli rest v0 shutdown get --host $REST_API
@@ -44,7 +44,7 @@ while true; do
             BOOTSTRAP_TIME=$SECONDS
             if ((DIFF_SECONDS < DIFF_SECONDS_OLD_CYCLE)); then
                 if ((DIFF_SECONDS_OLD_CYCLE > RECOVER_MAX_SECONDS)); then
-                    RECOVER_MAX_SECONDS=$(echo $DIFF_SECONDS_OLD_CYCLE)
+                    RECOVER_MAX_SECONDS=$DIFF_SECONDS_OLD_CYCLE
                     echo "Jormungandr synchronized, new record of recovery from time difference $DIFF_SECONDS_OLD_CYCLE seconds! Time difference now $DIFF_SECONDS seconds. Last block height $LAST_BLOCK_HEIGHT."
                   else
                    echo "Jormungandr synchronized, recovered from time difference $DIFF_SECONDS_OLD_CYCLE seconds. Time difference now $DIFF_SECONDS seconds. Last block height $LAST_BLOCK_HEIGHT."
@@ -66,6 +66,8 @@ while true; do
        fi
     fi
 
-    DIFF_SECONDS_OLD_CYCLE=$DIFF_SECONDS
+    if ((DIFF_SECONDS > 0)); then
+     DIFF_SECONDS_OLD_CYCLE=$DIFF_SECONDS
+    fi
     sleep $POLLING_INTERVAL_SECONDS
 done
