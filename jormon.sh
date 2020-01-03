@@ -16,7 +16,7 @@
 # - Modified timing of SYNC_TOLERANCE_SECONDS from 240 to 300 seconds
 # - Added monitoring of stuck node recovery times and record recovery times to fine tune parameter SYNC_TOLERANCE_SECONDS
 #
-# Version 2.6
+# Version 2.7
 
 POLLING_INTERVAL_SECONDS=30
 SYNC_TOLERANCE_SECONDS=300
@@ -40,6 +40,7 @@ while true; do
             echo "Jormungandr out-of-sync. Time difference of $DIFF_SECONDS seconds. Shutting down node with uptime $UPTIME..."
             jcli rest v0 shutdown get --host $REST_API
             BOOTSTRAP_TIME=$SECONDS
+            DIFF_SECONDS=0
         else
             BOOTSTRAP_TIME=$SECONDS
             if ((DIFF_SECONDS < DIFF_SECONDS_OLD_CYCLE)); then
