@@ -24,6 +24,7 @@ do
     else 
       echo "Shutting down node due to stuck keyword with $Uptime at $LastBlockHeight at $NOW" 
       jcli rest v0 shutdown get --host $REST_API
+      sleep 5
     fi
   fi
 done
