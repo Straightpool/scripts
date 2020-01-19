@@ -15,7 +15,7 @@ jormon.sh - Based on the more aggressive restart script from Michael Fazio (sand
             Replace all <> placeholders to match your setup\
             Known issues: If timing is unlucky and no new block is received between bootstrap end and next polling after a restart, the bootstrap time will be added to the already overflown time intervall and another restart will the triggered potentially causing a restart loop
             
-updatepeers.sh - Will rewrite a node-config.json input file based on tcpping results. Only open peers are written to the config-runtime.\
+updatepeers.sh - Based on the start-node.sh script from agent-rat. Will rewrite a node-config.json input file based on tcpping results. Only open peers are written to the config-runtime.\
                If you have a JAML file currently, you can use a converter such as https://codebeautify.org/yaml-to-json-xml-csv? to convert the JAML to json\
               Use https://jsonlint.com/ to verifty the soure JSON file is correct\
               Only keep the peers in the source file you are interested in (e.g. the fastest peers)
