@@ -6,7 +6,7 @@ stuck_check.sh - Will restart node when a "stuck_notifier" is thrown\
                  Assumption: systemctl is used to start jormungandr node.\
                  Replace all <> placeholders to match your setup.
                  
-pooltool.sh - Simple wrapper to call sendmytip in regular intervals while sending only the tip of the leader node when running multiple nodes (assumption 2)                
+pooltool.sh - Simple wrapper to call sendmytip in regular intervals while sending only the tip of the leader node when running multiple nodes (assumption 2). For this to work set RESTAPI_PORT=$1 in sendmytip.sh to accept the port parameter from this wrapper                
             
 updatepeers.sh - Based on the start-node.sh script from agent-rat. Will rewrite a node-config.json input file based on tcpping results. Only open peers are written to the config-runtime.\
                If you have a JAML file currently, you can use a converter such as https://codebeautify.org/yaml-to-json-xml-csv? to convert the JAML to json\
