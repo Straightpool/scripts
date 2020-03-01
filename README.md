@@ -1,9 +1,8 @@
 # Helper scripts to run a Stakepool node
 
-**stuck-check.sh** - Will restart node when a "stuck_notifier" or other bad errors are thrown\
+**stuck-check.sh** - Restart script after stuck_notifier or any other bad keyword is received in logs\
                  In node-config you can define the time threshold when you want the node to throw the stuck_notifier\
-                 E.g. "no_blockchain_updates_warning_interval: 4m" (default is 30m)
-                 Assumption: systemctl is used to start jormungandr node.\
+                 E.g. "no_blockchain_updates_warning_interval: 4m" (default is 30m)\
                  Replace all <> placeholders to match your setup.
 
 **jormungandr-leaders-failover-sh** - Highly recommended to manage leadship switching between two nodes and to sendmytip to pooltool, hosted not here (no tuning by myself necessary) but at https://github.com/rdlrt/Alternate-Jormungandr-Testnet/blob/master/scripts/jormungandr-leaders-failover.sh
