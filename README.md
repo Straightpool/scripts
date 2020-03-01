@@ -12,8 +12,12 @@
               Use https://jsonlint.com/ to verifty the soure JSON file is correct\
               Only keep the peers in the source file you are interested in (e.g. the fastest peers)\
               Modify InitVar section to your local environment
-
+              
+**monitor-ubunto.py** - This is a the file https://github.com/input-output-hk/jormungandr-nix/blob/master/nixos/jormungandr-monitor/monitor.py patched to work on ubunto for prometheus integration.\
+             
 ## Deprecated, not used by myself anymore
+
+**monitor-lvly-singlepool.py** - This is a the file https://github.com/lovelypool/cardano_stuff/blob/master/monitor.py patched to work on only one pool.\
 
 **pooltool.sh** - Simple wrapper to call sendmytip in regular intervals while sending only the tip of the leader node when running multiple nodes (assumption 2). For this to work set RESTAPI_PORT=$1 in sendmytip.sh to accept the port parameter from this wrapper                
               
