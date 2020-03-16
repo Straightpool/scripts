@@ -13,7 +13,8 @@
               Only keep the peers in the source file you are interested in (e.g. the fastest peers)\
               Modify InitVar section to your local environment
               
-**monitor-ubunto.py** - This is a the file https://github.com/input-output-hk/jormungandr-nix/blob/master/nixos/jormungandr-monitor/monitor.py patched to work on ubunto for prometheus integration.
+**monitor-ubunto.py** - This is a the file https://github.com/input-output-hk/jormungandr-nix/blob/master/nixos/jormungandr-monitor/monitor.py patched to work on ubunto for prometheus integration.\
+Now uses the new metric peerConnectedCnt instead of the unreliable manual connection count (especially when running more than one node on one host). After updating the Jormungandr-exporter, in your Grafana dashboard point e.g. "Jormungandr Connections" to the new exposed metric "jormungandr_peerConnectedCnt"
              
 ## Deprecated, not used by myself anymore
 
