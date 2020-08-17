@@ -1,4 +1,4 @@
-# Helper scripts to run a Stakepool node
+# Helper scripts to run a Stakepool node on ITN
 
 **stuck-check.sh** - Restart script after stuck_notifier or any other bad keyword is received in logs\
                  In node-config you can define the time threshold when you want the node to throw the stuck_notifier\
